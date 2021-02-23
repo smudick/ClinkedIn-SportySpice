@@ -13,11 +13,20 @@ namespace ClinkedIn_SportySpice.Repositories
             new Clinker {Name="Prison Mike", ReleaseDate=new DateTime(2021,10,31), Interests = new List<string>(){"Robbing", "Stealing", "Kidnapping"} }
 
         };
-
-        public void ListService()
+        public List<Clinker> GetAll()
         {
-            //get by clinker by id and set it to variable
-            //clinker.Services.Add("
+            return _clinkers;
+        }
+        public Clinker GetById(int id)
+        {
+            var clinker = _clinkers.FirstOrDefault(c => c.Id == id);
+            return clinker;
+        }
+        public void Add(Clinker clinker)
+        {
+            var biggestExistingId = _clinkers.Max(l => l.Id);
+            clinker.Id = biggestExistingId + 1;
+            _clinkers.Add(clinker);
         }
      }
 }

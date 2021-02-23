@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "/api/clinkers",
+      "launchUrl": "api/clinkers",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

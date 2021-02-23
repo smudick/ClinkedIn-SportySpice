@@ -1,4 +1,5 @@
-﻿using ClinkedIn_SportySpice.Repositories;
+﻿using ClinkedIn_SportySpice.Models;
+using ClinkedIn_SportySpice.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,11 +18,30 @@ namespace ClinkedIn_SportySpice.Controllers
         {
             _repo = new ClinkerRepository();
         }
-
-        [HttpPut("{id}/services")]
-        public IActionResult ListService(int id)
+        [HttpGet]
+        public IActionResult GetAllClinkers()
         {
-
+            return Ok(_repo.GetAll());
         }
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            return Ok(_repo.GetById(id));
+        }
+        [HttpPost]
+        public IActionResult AddClinker(Clinker clinker)
+        {
+            _repo.Add(clinker);
+            return Created($"api/Loaves/{clinker.Name}", clinker);
+        }
+        [HttpPut("{id}/services")]
+        public IActionResult ListService(int id, [FromBody] string service)
+        {
+            var clinker = _repo.GetById(id);
+            clinker.Services.Add(service);
+
+            return Ok();
+        }
+
     }
 }
