@@ -8,6 +8,7 @@ namespace ClinkedIn_SportySpice.Models
     public class Clinker
     {
         public string Name { get; set; }
+        public int Id { get; set; }
         public DateTime ReleaseDate { get; set; }
         public List<string> Interests { get; set; }
         public List<string> Services { get; set; } = new List<string>();
