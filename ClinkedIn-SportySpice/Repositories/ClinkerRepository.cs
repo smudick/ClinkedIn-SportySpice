@@ -13,6 +13,16 @@ namespace ClinkedIn_SportySpice.Repositories
             new Clinker {Name="Prison Mike", ReleaseDate=new DateTime(2021,10,31), Interests = new List<string>(){"Robbing", "Stealing", "Kidnapping"} }
 
         };
+        public List<Clinker> GetAll()
+        {
+            return _clinkers;
+        }
+        public void Add(Clinker clinker)
+        {
+            var biggestExistingId = _clinkers.Max(l => l.Id);
+            clinker.Id = biggestExistingId + 1;
+            _clinkers.Add(clinker);
+        }
 
         public List<Clinker> Get(string interest)
         {
