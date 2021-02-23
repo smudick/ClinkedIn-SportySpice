@@ -17,5 +17,20 @@ namespace ClinkedIn_SportySpice.Controllers
         {
             _repo = new ClinkerRepository();
         }
+
+        //GET to /api/clinkers/{id}
+        [HttpGet("{id}")]
+        public IActionResult GetByInterest(string interest)
+        {
+            var clinkers = _repo.Get(interest);
+
+            if (clinkers == null)
+            {
+                return NotFound("No clinkers matched your search request.");
+            }
+
+            return Ok(clinkers);
+        }
+
     }
 }
