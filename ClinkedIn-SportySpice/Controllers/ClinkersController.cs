@@ -23,11 +23,25 @@ namespace ClinkedIn_SportySpice.Controllers
         {
             return Ok(_repo.GetAll());
         }
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            return Ok(_repo.GetById(id));
+        }
         [HttpPost]
         public IActionResult AddClinker(Clinker clinker)
         {
             _repo.Add(clinker);
             return Created($"api/Loaves/{clinker.Name}", clinker);
         }
+        [HttpPut("{id}/services")]
+        public IActionResult ListService(int id, [FromBody] string service)
+        {
+            var clinker = _repo.GetById(id);
+            clinker.Services.Add(service);
+
+            return Ok(_repo.GetById(id));
+        }
+
     }
 }
