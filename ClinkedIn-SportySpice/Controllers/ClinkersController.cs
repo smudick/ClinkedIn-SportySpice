@@ -38,7 +38,13 @@ namespace ClinkedIn_SportySpice.Controllers
         public IActionResult AddClinker(Clinker clinker)
         {
             _repo.Add(clinker);
-            return Created($"api/Loaves/{clinker.Name}", clinker);
+            return Created($"api/clinkers/{clinker.Name}", clinker);
+        }
+        [HttpPut("{id}/add-enemy/{enemyId}")]
+        public IActionResult AddEnemy(int id, int enemyId)
+        {
+            _repo.AddEnemy(id, enemyId);
+            return Created($"api/clinkers/{id}/add-enemy/{enemyId}", "Enemy successfully added");
         }
         [HttpPut("{id}/services")]
         public IActionResult ListService(int id, [FromBody] string service)
@@ -47,6 +53,20 @@ namespace ClinkedIn_SportySpice.Controllers
             clinker.Services.Add(service);
 
             return Ok(_repo.GetById(id));
+        }
+
+        //GET to /api/clinkers/{interest}
+        [HttpGet("search/interest/{interest}")]
+        public IActionResult GetByInterest(string interest)
+        {
+            var clinkers = _repo.GetByInterest(interest);
+
+            if (clinkers.Count == 0)
+            {
+                return NotFound("No clinkers matched your search request.");
+            }
+
+            return Ok(clinkers);
         }
 
     }
