@@ -28,6 +28,11 @@ namespace ClinkedIn_SportySpice.Controllers
         {
             return Ok(_repo.GetById(id));
         }
+        [HttpGet("{services}")]
+        public IActionResult GetByServices()
+        {
+            return Ok();
+        }
         [HttpPost]
         public IActionResult AddClinker(Clinker clinker)
         {
