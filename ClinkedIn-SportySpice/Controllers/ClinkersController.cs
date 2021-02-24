@@ -23,6 +23,11 @@ namespace ClinkedIn_SportySpice.Controllers
         {
             return Ok(_repo.GetAll());
         }
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            return Ok(_repo.GetById(id));
+        }
         [HttpPost]
         public IActionResult AddClinker(Clinker clinker)
         {
@@ -35,5 +40,14 @@ namespace ClinkedIn_SportySpice.Controllers
             _repo.AddEnemy(userId, enemyId);
             return Created($"api/clinkers/{userId}/add-enemy/{enemyId}", "Enemy successfully added");
         }
+        [HttpPut("{id}/services")]
+        public IActionResult ListService(int id, [FromBody] string service)
+        {
+            var clinker = _repo.GetById(id);
+            clinker.Services.Add(service);
+
+            return Ok(_repo.GetById(id));
+        }
+
     }
 }
