@@ -40,7 +40,7 @@ namespace ClinkedIn_SportySpice.Controllers
             var clinker = _repo.GetById(id);
             clinker.Services.Add(service);
 
-            return Ok();
+            return Ok(_repo.GetById(id));
         }
 
     }
