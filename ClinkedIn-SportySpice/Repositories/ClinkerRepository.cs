@@ -20,6 +20,11 @@ namespace ClinkedIn_SportySpice.Repositories
         {
             return _clinkers;
         }
+        public Clinker GetById(int id)
+        {
+            var clinker = _clinkers.FirstOrDefault(c => c.Id == id);
+            return clinker;
+        }
         public void Add(Clinker clinker)
         {
             var biggestExistingId = _clinkers.Max(l => l.Id);
@@ -31,6 +36,12 @@ namespace ClinkedIn_SportySpice.Repositories
         {
             var clinkers = _clinkers.FindAll(clinker => clinker.Interests.Contains(interest, StringComparer.InvariantCultureIgnoreCase));
             return clinkers;
+        }
+        public void AddEnemy(int userId, int enemyId)
+        {
+            var userClinker = GetById(userId);
+            var enemyClinker = GetById(enemyId);
+            userClinker.Enemies.Add(enemyClinker);
         }
      }
 }
