@@ -3,32 +3,16 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:50170",
-      "sslPort": 44320
+      "applicationUrl": "http://localhost:52070/",
+      "sslPort": 0
     }
   },
-  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "IIS Express": {
+    "Start": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-<<<<<<< HEAD
       "launchUrl": "api/clinkers",
-=======
-      "launchUrl": "/api/clinkers",
->>>>>>> main
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "ClinkedIn_SportySpice": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "weatherforecast",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "ErrorString": "Invalid property identifier character: <. Path 'profiles['IIS Express'].launchBrowser', line 15, position 0."
     }
   }
 }

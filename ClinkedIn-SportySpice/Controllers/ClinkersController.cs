@@ -30,8 +30,8 @@ namespace ClinkedIn_SportySpice.Controllers
             return Created($"api/Loaves/{clinker.Name}", clinker);
         }
 
-        //GET to /api/clinkers/{id}
-        [HttpGet("{id}")]
+        //GET to /api/clinkers/{interest}
+        [HttpGet("{interest}")]
         public IActionResult GetByInterest(string interest)
         {
             var clinkers = _repo.Get(interest);
