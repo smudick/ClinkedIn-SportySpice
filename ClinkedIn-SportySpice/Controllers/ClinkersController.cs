@@ -32,7 +32,13 @@ namespace ClinkedIn_SportySpice.Controllers
         public IActionResult AddClinker(Clinker clinker)
         {
             _repo.Add(clinker);
-            return Created($"api/Loaves/{clinker.Name}", clinker);
+            return Created($"api/clinkers/{clinker.Name}", clinker);
+        }
+        [HttpPut("{id}/add-enemy/{enemyId}")]
+        public IActionResult AddEnemy(int id, int enemyId)
+        {
+            _repo.AddEnemy(id, enemyId);
+            return Created($"api/clinkers/{id}/add-enemy/{enemyId}", "Enemy successfully added");
         }
         [HttpPut("{id}/services")]
         public IActionResult ListService(int id, [FromBody] string service)
