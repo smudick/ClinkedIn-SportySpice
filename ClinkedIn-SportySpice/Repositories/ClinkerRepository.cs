@@ -28,7 +28,7 @@ namespace ClinkedIn_SportySpice.Repositories
         public List<Clinker> GetByServices(string service)
         {
             var results = _clinkers.Where(clinker => clinker.Services.Contains(service));
-            return results;
+            return (List<Clinker>)results;
         }
         public void Add(Clinker clinker)
         {
