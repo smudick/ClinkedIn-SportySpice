@@ -10,10 +10,10 @@ namespace ClinkedIn_SportySpice.Repositories
     {
         static List<Clinker> _clinkers = new List<Clinker>
         {
-            new Clinker {Name="Prison Mike", ReleaseDate=new DateTime(2021,10,31), Interests = new List<string>(){"Robbing", "Stealing", "Kidnapping"} },
-            new Clinker {Name="Piper", ReleaseDate=new DateTime(2021,8,20), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
-            new Clinker {Name="Alex", ReleaseDate=new DateTime(2021,6,15), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
-            new Clinker {Name="Suzanne", ReleaseDate=new DateTime(2021,12,31), Interests = new List<string>(){"Robbing", "Embezzlement", "Corporate Fraud"} }
+            new Clinker {Name="Prison Mike", Id=1, ReleaseDate=new DateTime(2021,10,31), Interests = new List<string>(){"Robbing", "Stealing", "Kidnapping"} },
+            new Clinker {Name="Piper", Id=2, ReleaseDate=new DateTime(2021,8,20), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
+            new Clinker {Name="Alex", Id=3, ReleaseDate=new DateTime(2021,6,15), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
+            new Clinker {Name="Suzanne", Id=4, ReleaseDate=new DateTime(2021,12,31), Interests = new List<string>(){"Robbing", "Embezzlement", "Corporate Fraud"} }
 
         };
         public List<Clinker> GetAll()
