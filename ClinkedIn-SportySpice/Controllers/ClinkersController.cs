@@ -50,12 +50,12 @@ namespace ClinkedIn_SportySpice.Controllers
         }
 
         //GET to /api/clinkers/{interest}
-        [HttpGet("{interest}")]
+        [HttpGet("search/interest/{interest}")]
         public IActionResult GetByInterest(string interest)
         {
-            var clinkers = _repo.Get(interest);
+            var clinkers = _repo.GetByInterest(interest);
 
-            if (clinkers == null)
+            if (clinkers.Count == 0)
             {
                 return NotFound("No clinkers matched your search request.");
             }

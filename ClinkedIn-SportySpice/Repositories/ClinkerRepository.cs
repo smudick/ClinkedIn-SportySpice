@@ -32,7 +32,7 @@ namespace ClinkedIn_SportySpice.Repositories
             _clinkers.Add(clinker);
         }
 
-        public List<Clinker> Get(string interest)
+        public List<Clinker> GetByInterest(string interest)
         {
             var clinkers = _clinkers.FindAll(clinker => clinker.Interests.Contains(interest, StringComparer.InvariantCultureIgnoreCase));
             return clinkers;
