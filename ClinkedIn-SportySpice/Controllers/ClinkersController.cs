@@ -31,7 +31,14 @@ namespace ClinkedIn_SportySpice.Controllers
         [HttpGet("search/service/{service}")]
         public IActionResult GetByServices(string service)
         {
-            return Ok(_repo.GetByServices(service));
+            var clinkers = _repo.GetByServices(service);
+
+            if (clinkers.Count == 0)
+            {
+                return NotFound("No clinkers matched your search request.");
+            }
+
+            return Ok(clinkers);
         }
         [HttpPost]
         public IActionResult AddClinker(Clinker clinker)

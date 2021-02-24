@@ -25,10 +25,10 @@ namespace ClinkedIn_SportySpice.Repositories
             var clinker = _clinkers.FirstOrDefault(c => c.Id == id);
             return clinker;
         }
-        public IEnumerable<Clinker> GetByServices(string service)
+        public List<Clinker> GetByServices(string service)
         {
             var results = _clinkers.Where(clinker => clinker.Services.Contains(service, StringComparer.InvariantCultureIgnoreCase));
-            return results;
+            return results.ToList();
         }
         public void Add(Clinker clinker)
         {
