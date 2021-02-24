@@ -23,10 +23,11 @@ namespace ClinkedIn_SportySpice.Repositories
             clinker.Id = biggestExistingId + 1;
             _clinkers.Add(clinker);
         }
-        public void AddEnemy(Clinker enemy, int id)
+        public void AddEnemy(int userId, int enemyId)
         {
-           var chosenClinker = _clinkers.Find(clinker => clinker.Id == id);
-            chosenClinker.Enemies.Add(enemy);
+            var userClinker = GetClinker(userId);
+            var enemyClinker = GetClinker(enemyId);
+            userClinker.Enemies.Add(enemyClinker);
         }
      }
 }
