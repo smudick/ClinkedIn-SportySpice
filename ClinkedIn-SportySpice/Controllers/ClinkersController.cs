@@ -28,9 +28,10 @@ namespace ClinkedIn_SportySpice.Controllers
         {
             return Ok(_repo.GetById(id));
         }
-        [HttpGet("{services}")]
+        [HttpGet("search/service/{service}")]
         public IActionResult GetByServices()
         {
+
             return Ok();
         }
         [HttpPost]
