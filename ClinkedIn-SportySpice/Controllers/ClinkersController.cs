@@ -34,11 +34,11 @@ namespace ClinkedIn_SportySpice.Controllers
             _repo.Add(clinker);
             return Created($"api/clinkers/{clinker.Name}", clinker);
         }
-        [HttpPut("{id}/add-enemy")]
-        public IActionResult AddEnemy(int userId, int enemyId)
+        [HttpPut("{id}/add-enemy/{enemyId}")]
+        public IActionResult AddEnemy(int id, int enemyId)
         {
-            _repo.AddEnemy(userId, enemyId);
-            return Created($"api/clinkers/{userId}/add-enemy/{enemyId}", "Enemy successfully added");
+            _repo.AddEnemy(id, enemyId);
+            return Created($"api/clinkers/{id}/add-enemy/{enemyId}", "Enemy successfully added");
         }
         [HttpPut("{id}/services")]
         public IActionResult ListService(int id, [FromBody] string service)
