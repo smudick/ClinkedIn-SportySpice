@@ -61,6 +61,11 @@ namespace ClinkedIn_SportySpice.Controllers
             return Created($"api/clinkers/{id}/add-friend/{friendId}", "Friend successfully added");
         }
 
+        [HttpGet("{id}/second-friends")]
+        public IActionResult GetSecondFriends(int id)
+        {
+
+        }
 
         [HttpPut("{id}/services")]
         public IActionResult ListService(int id, [FromBody] string service)
