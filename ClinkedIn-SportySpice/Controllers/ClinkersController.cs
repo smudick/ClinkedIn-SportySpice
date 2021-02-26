@@ -117,5 +117,12 @@ namespace ClinkedIn_SportySpice.Controllers
             return Ok(_repo.GetById(id).Interests);
         }
 
+        [HttpPut("{id}/interests/{interestId}")]
+        public IActionResult UpdateInterest(int id, int interestId, [FromBody] string newInterest)
+        {
+            _repo.UpdateInterests(id, interestId, newInterest);
+            return Ok(_repo.GetById(id).Interests);
+        }
+
     }
 }
