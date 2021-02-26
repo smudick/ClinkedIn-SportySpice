@@ -59,7 +59,17 @@ namespace ClinkedIn_SportySpice.Repositories
         public void RemoveService(int id, int position)
         {
             var clinker = GetById(id);
-            clinker.Services.RemoveAt(position);
+            var serviceToRemove = clinker.Services.ElementAtOrDefault(position);
+
+            clinker.Services.Remove(serviceToRemove);
+        }
+
+        public void UpdateService(int id, int position, string newService)
+        {
+            var clinker = GetById(id);
+            var serviceToUpdate = clinker.Services.ElementAtOrDefault(position);
+
+            clinker.Services[position] = newService;
         }
      }
 }

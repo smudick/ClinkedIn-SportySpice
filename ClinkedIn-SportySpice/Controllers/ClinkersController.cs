@@ -109,7 +109,17 @@ namespace ClinkedIn_SportySpice.Controllers
         public IActionResult RemoveService(int id, int position)
         {
             _repo.RemoveService(id, position);
+
             return Ok();
+        }
+
+        // PUT to /api/clinkers/{id}/services/{position}
+        [HttpPut("{id}/services/{position}")]
+        public IActionResult UpdateService(int id, int position, [FromBody] string newService)
+        {
+            _repo.UpdateService(id, position, newService);
+
+            return Ok(_repo.GetById(id));
         }
 
     }
