@@ -56,6 +56,53 @@ namespace ClinkedIn_SportySpice.Repositories
             userClinker.Friends.Add(friendClinker);
         }
 
+        public HashSet<Clinker> GetSecondFriends(int id)
+        {
+            var user = GetById(id);
+            var secondFriends = new HashSet<Clinker>();
+            foreach (var friend in user.Friends)
+            {
+                var addList = friend.Friends.Where(f => !user.Friends.Contains(f)).ToList();
+                addList.ForEach(f => secondFriends.Add(f));
+            }
+            return secondFriends;
+
+        }
+
+        public void AddInterests(int userId, string interest)
+        {
+            var user = GetById(userId);
+            user.Interests.Add(interest);
+        }
+
+        public void DeleteInterests(int userId, int interestId)
+        {
+            var user = GetById(userId);
+            try
+            {
+
+            var interestToRemove = user.Interests[interestId];
+            user.Interests.Remove(interestToRemove);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                
+            }
+
+        }
+        public void UpdateInterests(int userId, int interestId, string newInterest)
+        {
+            var user = GetById(userId);
+            try
+            {
+                user.Interests[interestId] = newInterest;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                AddInterests(userId, newInterest);
+            }
+        }
+
         public void RemoveService(int id, int position)
         {
             var clinker = GetById(id);
