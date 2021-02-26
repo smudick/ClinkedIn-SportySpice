@@ -109,7 +109,12 @@ namespace ClinkedIn_SportySpice.Controllers
             {
                 return Ok($"You have {daysLeft} days left in your sentence.");
             }
-
+        }
+        [HttpDelete("{id}/interests/{interestId}")]
+        public IActionResult DeleteInterest(int id, int interestId)
+        {
+            _repo.DeleteInterests(id, interestId);
+            return Ok(_repo.GetById(id).Interests);
         }
 
     }

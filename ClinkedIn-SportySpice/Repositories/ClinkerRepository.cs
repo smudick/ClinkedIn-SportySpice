@@ -62,6 +62,11 @@ namespace ClinkedIn_SportySpice.Repositories
             user.Interests.Add(interest);
         }
 
-        public void DeleteInterests(int userId, int interest)
+        public void DeleteInterests(int userId, int interestPlaceInList)
+        {
+            var user = GetById(userId);
+            var interestToRemove = user.Interests[interestPlaceInList];
+            user.Interests.Remove(interestToRemove);
+        }
      }
 }
