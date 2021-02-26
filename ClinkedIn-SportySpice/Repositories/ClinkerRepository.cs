@@ -56,10 +56,12 @@ namespace ClinkedIn_SportySpice.Repositories
             userClinker.Friends.Add(friendClinker);
         }
 
-        public void UpdateInterests(int userId, string interest)
+        public void AddInterests(int userId, string interest)
         {
             var user = GetById(userId);
             user.Interests.Add(interest);
         }
+
+        public void DeleteInterests(int userId, int interest)
      }
 }
