@@ -95,6 +95,13 @@ namespace ClinkedIn_SportySpice.Controllers
             return Ok(clinkers);
         }
 
+        [HttpPut("{id}/interests")]
+        public IActionResult AddInterest(int id, [FromBody] string interest)
+        {
+            _repo.AddInterests(id, interest);
+            return Ok(_repo.GetById(id).Interests);
+        }
+
         // GET to /api/clinkers/{id}/days-left
         [HttpGet("{id}/days-left")]
         public IActionResult GetDaysLeft(int id)
@@ -112,7 +119,19 @@ namespace ClinkedIn_SportySpice.Controllers
             {
                 return Ok($"You have {daysLeft} days left in your sentence.");
             }
+        }
+        [HttpDelete("{id}/interests/{interestId}")]
+        public IActionResult DeleteInterest(int id, int interestId)
+        {
+            _repo.DeleteInterests(id, interestId);
+            return Ok(_repo.GetById(id).Interests);
+        }
 
+        [HttpPut("{id}/interests/{interestId}")]
+        public IActionResult UpdateInterest(int id, int interestId, [FromBody] string newInterest)
+        {
+            _repo.UpdateInterests(id, interestId, newInterest);
+            return Ok(_repo.GetById(id).Interests);
         }
 
     }

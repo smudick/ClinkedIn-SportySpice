@@ -68,5 +68,39 @@ namespace ClinkedIn_SportySpice.Repositories
             return secondFriends;
 
         }
+
+        public void AddInterests(int userId, string interest)
+        {
+            var user = GetById(userId);
+            user.Interests.Add(interest);
+        }
+
+        public void DeleteInterests(int userId, int interestId)
+        {
+            var user = GetById(userId);
+            try
+            {
+
+            var interestToRemove = user.Interests[interestId];
+            user.Interests.Remove(interestToRemove);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                
+            }
+
+        }
+        public void UpdateInterests(int userId, int interestId, string newInterest)
+        {
+            var user = GetById(userId);
+            try
+            {
+                user.Interests[interestId] = newInterest;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                AddInterests(userId, newInterest);
+            }
+        }
      }
 }
