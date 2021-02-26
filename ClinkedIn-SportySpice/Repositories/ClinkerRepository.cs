@@ -102,5 +102,28 @@ namespace ClinkedIn_SportySpice.Repositories
                 AddInterests(userId, newInterest);
             }
         }
+
+        public void RemoveService(int id, int position)
+        {
+            var clinker = GetById(id);
+            var serviceToRemove = clinker.Services.ElementAtOrDefault(position);
+
+            clinker.Services.Remove(serviceToRemove);
+        }
+
+        public void UpdateService(int id, int position, string newService)
+        {
+            var clinker = GetById(id);
+
+            try
+            {
+                clinker.Services[position] = newService;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                clinker.Services.Add(newService);
+            }
+
+        }
      }
 }
