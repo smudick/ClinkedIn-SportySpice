@@ -67,9 +67,16 @@ namespace ClinkedIn_SportySpice.Repositories
         public void UpdateService(int id, int position, string newService)
         {
             var clinker = GetById(id);
-            var serviceToUpdate = clinker.Services.ElementAtOrDefault(position);
 
-            clinker.Services[position] = newService;
+            try
+            {
+                clinker.Services[position] = newService;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                clinker.Services.Add(newService);
+            }
+
         }
      }
 }
