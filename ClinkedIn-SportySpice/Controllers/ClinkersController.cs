@@ -92,5 +92,25 @@ namespace ClinkedIn_SportySpice.Controllers
             return Ok(_repo.GetById(id).Interests);
         }
 
+        // GET to /api/clinkers/{id}/days-left
+        [HttpGet("{id}/days-left")]
+        public IActionResult GetDaysLeft(int id)
+        {
+            var clinker = _repo.GetById(id);
+            DateTime today = DateTime.Now;
+            var releaseDate = clinker.ReleaseDate;
+            double daysLeft = Math.Round(releaseDate.Subtract(today).TotalDays);
+            
+            if (daysLeft == 1)
+            {
+                return Ok($"You have {daysLeft} day left in your sentence!");
+            } 
+            else
+            {
+                return Ok($"You have {daysLeft} days left in your sentence.");
+            }
+
+        }
+
     }
 }
