@@ -55,5 +55,11 @@ namespace ClinkedIn_SportySpice.Repositories
             var friendClinker = GetById(friendId);
             userClinker.Friends.Add(friendClinker);
         }
+
+        public void RemoveService(int id, int position)
+        {
+            var clinker = GetById(id);
+            clinker.Services.RemoveAt(position);
+        }
      }
 }

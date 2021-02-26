@@ -102,7 +102,14 @@ namespace ClinkedIn_SportySpice.Controllers
             {
                 return Ok($"You have {daysLeft} days left in your sentence.");
             }
+        }
 
+        // DELETE to /api/clinkers/{id}/services/{position}
+        [HttpDelete("{id}/services/{position}")]
+        public IActionResult RemoveService(int id, int position)
+        {
+            _repo.RemoveService(id, position);
+            return Ok();
         }
 
     }
