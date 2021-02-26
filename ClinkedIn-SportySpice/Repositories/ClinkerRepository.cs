@@ -65,6 +65,7 @@ namespace ClinkedIn_SportySpice.Repositories
                 var addList = friend.Friends.Where(f => !user.Friends.Contains(f)).ToList();
                 addList.ForEach(f => secondFriends.Add(f));
             }
+            return secondFriends;
 
         }
      }

@@ -64,7 +64,7 @@ namespace ClinkedIn_SportySpice.Controllers
         [HttpGet("{id}/second-friends")]
         public IActionResult GetSecondFriends(int id)
         {
-
+            return Ok(_repo.GetSecondFriends(id));
         }
 
         [HttpPut("{id}/services")]
