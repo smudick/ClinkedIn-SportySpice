@@ -43,5 +43,12 @@ namespace ClinkedIn_SportySpice.Repositories
             var enemyClinker = GetById(enemyId);
             userClinker.Enemies.Add(enemyClinker);
         }
+
+        public void AddFriend(int userId, int friendId)
+        {
+            var userClinker = GetById(userId);
+            var friendClinker = GetById(friendId);
+            userClinker.Friends.Add(friendClinker);
+        }
      }
 }
