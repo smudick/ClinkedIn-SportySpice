@@ -64,7 +64,12 @@ namespace ClinkedIn_SportySpice.Controllers
         [HttpGet("{id}/second-friends")]
         public IActionResult GetSecondFriends(int id)
         {
-            return Ok(_repo.GetSecondFriends(id));
+            var result = _repo.GetSecondFriends(id);
+            if (result.Count == 0)
+            {
+                return NotFound("No clinkers matched your search request.");
+            }
+            return Ok();
         }
 
         [HttpPut("{id}/services")]
