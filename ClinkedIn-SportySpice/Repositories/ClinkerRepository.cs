@@ -56,6 +56,19 @@ namespace ClinkedIn_SportySpice.Repositories
             userClinker.Friends.Add(friendClinker);
         }
 
+        public HashSet<Clinker> GetSecondFriends(int id)
+        {
+            var user = GetById(id);
+            var secondFriends = new HashSet<Clinker>();
+            foreach (var friend in user.Friends)
+            {
+                var addList = friend.Friends.Where(f => !user.Friends.Contains(f)).ToList();
+                addList.ForEach(f => secondFriends.Add(f));
+            }
+            return secondFriends;
+
+        }
+
         public void AddInterests(int userId, string interest)
         {
             var user = GetById(userId);
