@@ -91,6 +91,10 @@ namespace ClinkedIn_SportySpice.Controllers
         public IActionResult ListService(int id, [FromBody] string service)
         {
             var clinker = _repo.GetById(id);
+            if (clinker == null)
+            {
+                return NotFound("Service cannot be listed as requested.");
+            }
             clinker.Services.Add(service);
 
             return Ok(_repo.GetById(id));
@@ -113,8 +117,12 @@ namespace ClinkedIn_SportySpice.Controllers
         [HttpPut("{id}/interests")]
         public IActionResult AddInterest(int id, [FromBody] string interest)
         {
-            _repo.AddInterests(id, interest);
+            var userExists = _repo.AddInterests(id, interest);
+            if (userExists)
+            {
             return Ok(_repo.GetById(id).Interests);
+            }
+            return NotFound("User not found.");
         }
 
         // GET to /api/clinkers/{id}/days-left
@@ -122,6 +130,10 @@ namespace ClinkedIn_SportySpice.Controllers
         public IActionResult GetDaysLeft(int id)
         {
             var clinker = _repo.GetById(id);
+            if (clinker == null)
+            {
+                return NotFound("User not found.");
+            }
             DateTime today = DateTime.Now;
             var releaseDate = clinker.ReleaseDate;
             double daysLeft = Math.Round(releaseDate.Subtract(today).TotalDays);
@@ -138,33 +150,47 @@ namespace ClinkedIn_SportySpice.Controllers
         [HttpDelete("{id}/interests/{interestId}")]
         public IActionResult DeleteInterest(int id, int interestId)
         {
-            _repo.DeleteInterests(id, interestId);
+            var userExists = _repo.DeleteInterests(id, interestId);
+            if (userExists)
+            {
             return Ok(_repo.GetById(id).Interests);
+            }
+            return NotFound("User not found.");
         }
 
         [HttpPut("{id}/interests/{interestId}")]
         public IActionResult UpdateInterest(int id, int interestId, [FromBody] string newInterest)
         {
-            _repo.UpdateInterests(id, interestId, newInterest);
-            return Ok(_repo.GetById(id).Interests);
+            var userExists = _repo.UpdateInterests(id, interestId, newInterest);
+            if (userExists)
+            {
+                return Ok(_repo.GetById(id).Interests);
+            }
+            return NotFound("User not found.");
         }
 
         // DELETE to /api/clinkers/{id}/services/{position}
         [HttpDelete("{id}/services/{position}")]
         public IActionResult RemoveService(int id, int position)
         {
-            _repo.RemoveService(id, position);
-
+            var userExists = _repo.RemoveService(id, position);
+            if (userExists)
+            {
             return Ok();
+            }
+            return NotFound("User not found.");
         }
 
         // PUT to /api/clinkers/{id}/services/{position}
         [HttpPut("{id}/services/{position}")]
         public IActionResult UpdateService(int id, int position, [FromBody] string newService)
         {
-            _repo.UpdateService(id, position, newService);
-
+            var userExists = _repo.UpdateService(id, position, newService);
+            if (userExists)
+            {
             return Ok(_repo.GetById(id));
+            }
+            return NotFound("User not found.");
         }
 
     }
