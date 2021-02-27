@@ -61,7 +61,7 @@ namespace ClinkedIn_SportySpice.Controllers
                 return Created($"api/clinkers/{id}/add-enemy/{enemyId}", "Enemy successfully added");
             }
 
-            return NotFound("User does not exist.");
+            return NotFound("Cannot add enemy as requested.");
         }
 
         [HttpPut("{id}/add-friend/{friendId}")]
@@ -72,7 +72,7 @@ namespace ClinkedIn_SportySpice.Controllers
             {
                 return Created($"api/clinkers/{id}/add-friend/{friendId}", "Friend successfully added");
             }
-            return NotFound("User does not exist.");
+            return NotFound("Cannot add friend as requested.");
             
         }
 

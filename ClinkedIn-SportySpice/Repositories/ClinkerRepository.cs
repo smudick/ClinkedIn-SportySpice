@@ -47,7 +47,7 @@ namespace ClinkedIn_SportySpice.Repositories
             var userClinker = GetById(userId);
             var enemyClinker = GetById(enemyId);
 
-            if (userClinker == null || enemyClinker == null)
+            if (userClinker == null || enemyClinker == null || userClinker == enemyClinker || userClinker.Enemies.Contains(enemyId))
             {
                 return false;
             }
@@ -61,7 +61,7 @@ namespace ClinkedIn_SportySpice.Repositories
             var userClinker = GetById(userId);
             var friendClinker = GetById(friendId);
 
-            if (friendClinker == null || userClinker == null)
+            if (friendClinker == null || userClinker == null || userClinker == friendClinker || userClinker.Friends.Contains(friendId))
             {
                 return false;
             } 
