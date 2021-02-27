@@ -26,6 +26,11 @@ namespace ClinkedIn_SportySpice.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
+            var clinker = _repo.GetById(id);
+            if (clinker == null)
+            {
+                return NotFound("No clinker found.");
+            }
             return Ok(_repo.GetById(id));
         }
         [HttpGet("search/service/{service}")]
@@ -50,15 +55,25 @@ namespace ClinkedIn_SportySpice.Controllers
         [HttpPut("{id}/add-enemy/{enemyId}")]
         public IActionResult AddEnemy(int id, int enemyId)
         {
-            _repo.AddEnemy(id, enemyId);
-            return Created($"api/clinkers/{id}/add-enemy/{enemyId}", "Enemy successfully added");
+            var usersExist = _repo.AddEnemy(id, enemyId);
+            if (usersExist)
+            {
+                return Created($"api/clinkers/{id}/add-enemy/{enemyId}", "Enemy successfully added");
+            }
+
+            return NotFound("User does not exist.");
         }
 
         [HttpPut("{id}/add-friend/{friendId}")]
         public IActionResult AddFriend(int id, int friendId)
         {
-            _repo.AddFriend(id, friendId);
-            return Created($"api/clinkers/{id}/add-friend/{friendId}", "Friend successfully added");
+            var usersExist = _repo.AddFriend(id, friendId);
+            if (usersExist)
+            {
+                return Created($"api/clinkers/{id}/add-friend/{friendId}", "Friend successfully added");
+            }
+            return NotFound("User does not exist.");
+            
         }
 
         [HttpGet("{id}/second-friends")]
@@ -69,7 +84,7 @@ namespace ClinkedIn_SportySpice.Controllers
             {
                 return NotFound("No clinkers matched your search request.");
             }
-            return Ok();
+            return Ok(result);
         }
 
         [HttpPut("{id}/services")]

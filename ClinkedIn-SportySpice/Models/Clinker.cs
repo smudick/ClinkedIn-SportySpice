@@ -12,8 +12,8 @@ namespace ClinkedIn_SportySpice.Models
         public DateTime ReleaseDate { get; set; }
         public List<string> Interests { get; set; }
         public List<string> Services { get; set; } = new List<string>();
-        public List<Clinker> Friends { get; set; } = new List<Clinker>();
-        public List<Clinker> Enemies { get; set; } = new List<Clinker>();
+        public List<int> Friends { get; set; } = new List<int>();
+        public List<int> Enemies { get; set; } = new List<int>();
 
     }
 }
