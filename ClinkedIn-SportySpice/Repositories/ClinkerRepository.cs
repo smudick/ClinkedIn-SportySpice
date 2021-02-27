@@ -27,8 +27,9 @@ namespace ClinkedIn_SportySpice.Repositories
         }
         public List<Clinker> GetByServices(string service)
         {
-            var results = _clinkers.Where(clinker => clinker.Services.Contains(service, StringComparer.InvariantCultureIgnoreCase));
-            return results.ToList();
+            var results = new List<Clinker>();
+            results = _clinkers.Where(clinker => clinker.Services.Contains(service, StringComparer.InvariantCultureIgnoreCase)).ToList();
+            return results;
         }
         public void Add(Clinker clinker)
         {
@@ -39,7 +40,8 @@ namespace ClinkedIn_SportySpice.Repositories
 
         public List<Clinker> GetByInterest(string interest)
         {
-            var clinkers = _clinkers.FindAll(clinker => clinker.Interests.Contains(interest, StringComparer.InvariantCultureIgnoreCase));
+            var clinkers = new List<Clinker>();
+            clinkers = _clinkers.FindAll(clinker => clinker.Interests.Contains(interest, StringComparer.InvariantCultureIgnoreCase));
             return clinkers;
         }
         public bool AddEnemy(int userId, int enemyId)
@@ -103,18 +105,26 @@ namespace ClinkedIn_SportySpice.Repositories
             return secondFriends;
         }
 
-        public void AddInterests(int userId, string interest)
+        public bool AddInterests(int userId, string interest)
         {
             var user = GetById(userId);
+            if (user == null)
+            {
+                return false;
+            }
             user.Interests.Add(interest);
+            return true;
         }
 
-        public void DeleteInterests(int userId, int interestId)
+        public bool DeleteInterests(int userId, int interestId)
         {
             var user = GetById(userId);
+            if (user == null)
+            {
+                return false;
+            }
             try
             {
-
                 var interestToRemove = user.Interests[interestId];
                 user.Interests.Remove(interestToRemove);
             }
@@ -122,11 +132,16 @@ namespace ClinkedIn_SportySpice.Repositories
             {
 
             }
+            return true;
 
         }
-        public void UpdateInterests(int userId, int interestId, string newInterest)
+        public bool UpdateInterests(int userId, int interestId, string newInterest)
         {
             var user = GetById(userId);
+            if (user == null)
+            {
+                return false;
+            }
             try
             {
                 user.Interests[interestId] = newInterest;
@@ -135,20 +150,29 @@ namespace ClinkedIn_SportySpice.Repositories
             {
                 AddInterests(userId, newInterest);
             }
+            return true;
         }
 
-        public void RemoveService(int id, int position)
+        public bool RemoveService(int id, int position)
         {
             var clinker = GetById(id);
+            if (clinker == null)
+            {
+                return false;
+            }
             var serviceToRemove = clinker.Services.ElementAtOrDefault(position);
 
             clinker.Services.Remove(serviceToRemove);
+            return true;
         }
 
-        public void UpdateService(int id, int position, string newService)
+        public bool UpdateService(int id, int position, string newService)
         {
             var clinker = GetById(id);
-
+            if (clinker == null)
+            {
+                return false;
+            }
             try
             {
                 clinker.Services[position] = newService;
@@ -157,7 +181,7 @@ namespace ClinkedIn_SportySpice.Repositories
             {
                 clinker.Services.Add(newService);
             }
-
+            return true;
         }
     }
 }
