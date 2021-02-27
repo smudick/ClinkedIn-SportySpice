@@ -10,10 +10,10 @@ namespace ClinkedIn_SportySpice.Repositories
     {
         static List<Clinker> _clinkers = new List<Clinker>
         {
-            new Clinker {Id=0,Name="Prison Mike", ReleaseDate=new DateTime(2021,10,31), Interests = new List<string>(){"Robbing", "Stealing", "Kidnapping"} },
-            new Clinker {Id=1,Name="Piper", ReleaseDate=new DateTime(2021,2,27), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
-            new Clinker {Id=2,Name="Alex", ReleaseDate=new DateTime(2021,6,15), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
-            new Clinker {Id=3,Name="Suzanne", ReleaseDate=new DateTime(2021,12,31), Interests = new List<string>(){"Robbing", "Embezzlement", "Corporate Fraud"} }
+            new Clinker {Id=1,Name="Prison Mike", ReleaseDate=new DateTime(2021,10,31), Interests = new List<string>(){"Robbing", "Stealing", "Kidnapping"} },
+            new Clinker {Id=2,Name="Piper", ReleaseDate=new DateTime(2021,2,27), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
+            new Clinker {Id=3,Name="Alex", ReleaseDate=new DateTime(2021,6,15), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
+            new Clinker {Id=4,Name="Suzanne", ReleaseDate=new DateTime(2021,12,31), Interests = new List<string>(){"Robbing", "Embezzlement", "Corporate Fraud"} }
 
         };
         public List<Clinker> GetAll()
@@ -42,31 +42,57 @@ namespace ClinkedIn_SportySpice.Repositories
             var clinkers = _clinkers.FindAll(clinker => clinker.Interests.Contains(interest, StringComparer.InvariantCultureIgnoreCase));
             return clinkers;
         }
-        public void AddEnemy(int userId, int enemyId)
+        public bool AddEnemy(int userId, int enemyId)
         {
             var userClinker = GetById(userId);
             var enemyClinker = GetById(enemyId);
-            userClinker.Enemies.Add(enemyClinker);
+
+            if (userClinker == null || enemyClinker == null)
+            {
+                return false;
+            }
+
+            userClinker.Enemies.Add(enemyClinker.Id);
+            return true;
         }
 
-        public void AddFriend(int userId, int friendId)
+        public bool AddFriend(int userId, int friendId)
         {
             var userClinker = GetById(userId);
             var friendClinker = GetById(friendId);
-            userClinker.Friends.Add(friendClinker);
+
+            if (friendClinker == null || userClinker == null)
+            {
+                return false;
+            } 
+
+            userClinker.Friends.Add(friendClinker.Id);
+            return true;
         }
 
         public HashSet<Clinker> GetSecondFriends(int id)
         {
             var user = GetById(id);
             var secondFriends = new HashSet<Clinker>();
-            foreach (var friend in user.Friends)
-            {
-                var addList = friend.Friends.Where(f => !user.Friends.Contains(f)).ToList();
-                addList.ForEach(f => secondFriends.Add(f));
-            }
-            return secondFriends;
 
+            if (user != null)
+            {
+                foreach (var friendId in user.Friends)
+                {
+                    var friend = GetById(friendId);
+                    var secondFriendIds = friend.Friends.Where(f => !user.Friends.Contains(f)).ToList();
+
+                    if (secondFriendIds.Contains(user.Id))
+                    {
+                        secondFriendIds.Remove(user.Id);
+                    }
+
+                    secondFriendIds.ForEach(friendId => secondFriends.Add(GetById(friendId)));
+
+                }
+            }
+
+            return secondFriends;
         }
 
         public void AddInterests(int userId, string interest)
