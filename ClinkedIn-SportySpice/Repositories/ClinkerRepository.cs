@@ -51,6 +51,10 @@ namespace ClinkedIn_SportySpice.Repositories
             {
                 return false;
             }
+            else if (userClinker.Friends.Contains(enemyId))
+            {
+                userClinker.Friends.Remove(enemyId);
+            }
 
             userClinker.Enemies.Add(enemyClinker.Id);
             return true;
@@ -64,7 +68,11 @@ namespace ClinkedIn_SportySpice.Repositories
             if (friendClinker == null || userClinker == null || userClinker == friendClinker || userClinker.Friends.Contains(friendId))
             {
                 return false;
-            } 
+            }
+            else if (userClinker.Enemies.Contains(friendId))
+            {
+                userClinker.Enemies.Remove(friendId);
+            }
 
             userClinker.Friends.Add(friendClinker.Id);
             return true;
@@ -107,12 +115,12 @@ namespace ClinkedIn_SportySpice.Repositories
             try
             {
 
-            var interestToRemove = user.Interests[interestId];
-            user.Interests.Remove(interestToRemove);
+                var interestToRemove = user.Interests[interestId];
+                user.Interests.Remove(interestToRemove);
             }
             catch (ArgumentOutOfRangeException)
             {
-                
+
             }
 
         }
@@ -151,5 +159,5 @@ namespace ClinkedIn_SportySpice.Repositories
             }
 
         }
-     }
+    }
 }
