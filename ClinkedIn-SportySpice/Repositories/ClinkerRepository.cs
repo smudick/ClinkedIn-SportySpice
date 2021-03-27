@@ -1,4 +1,6 @@
 ﻿using ClinkedIn_SportySpice.Models;
+using Dapper;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +10,67 @@ namespace ClinkedIn_SportySpice.Repositories
 {
     public class ClinkerRepository
     {
-        static List<Clinker> _clinkers = new List<Clinker>
-        {
-            new Clinker {Id=1,Name="Prison Mike", ReleaseDate=new DateTime(2021,10,31), Interests = new List<string>(){"Robbing", "Stealing", "Kidnapping"} },
-            new Clinker {Id=2,Name="Piper", ReleaseDate=new DateTime(2021,2,27), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
-            new Clinker {Id=3,Name="Alex", ReleaseDate=new DateTime(2021,6,15), Interests = new List<string>(){"Smuggling", "Stealing", "Kidnapping"} },
-            new Clinker {Id=4,Name="Suzanne", ReleaseDate=new DateTime(2021,12,31), Interests = new List<string>(){"Robbing", "Embezzlement", "Corporate Fraud"} }
-
-        };
+        const string ConnectionString = "Server=localhost;Database=ClinkedIn;Trusted_Connection=True;";
         public List<Clinker> GetAll()
         {
+            using var db = new SqlConnection(ConnectionString);
+
+            var sql = @"Select c.id
+                        from Clinkers c";
+            var ids = db.Query<int>(sql).ToList();
+            var _clinkers = new List<Clinker>();
+
+            foreach (var id in ids)
+            {
+                var clinker = GetById(id);
+                _clinkers.Add(clinker);
+            }
             return _clinkers;
         }
         public Clinker GetById(int id)
         {
-            var clinker = _clinkers.FirstOrDefault(c => c.Id == id);
+
+            using var db = new SqlConnection(ConnectionString);
+
+            var sql = @"Select * 
+                        from Clinkers c
+                        where c.id = @id";
+            var clinker = db.QueryFirstOrDefault<Clinker>(sql, new { id = id });
+
+            var interestsSql = @"Select i.Name
+                                        from Interests i 
+                                        join Clinkers c
+                                            on c.id = i.clinkerId
+                                         where c.id = @id";
+            var interests = db.Query<string>(interestsSql, new { id = id }).ToList();
+
+            clinker.Interests = interests;
+            var servicesSql = @"Select s.Name
+                                        from Services s 
+                                        join Clinkers c
+                                            on c.id = s.clinkerId
+                                         where c.id = @id";
+            var services = db.Query<string>(servicesSql, new { id = id }).ToList();
+            clinker.Services = services;
+
+            var friendsSql = @"select c.Name 
+                                    from Clinkers c
+                                        join Friends f 
+	                                        on f.ClinkerId2 = c.id
+	                                where f.ClinkerId1 = @id";
+            var friends = db.Query<string>(friendsSql, new { id = id }).ToList();
+            clinker.Friends = friends;
+            var enemiesSql = @"select c.Name 
+                                    from Clinkers c
+                                        join Enemies e 
+	                                        on e.ClinkerId2 = c.id
+	                                where e.ClinkerId1 = @id";
+            var enemies = db.Query<string>(enemiesSql, new { id = id }).ToList();
+            clinker.Enemies = enemies;
+
             return clinker;
         }
+        /*
         public List<Clinker> GetByServices(string service)
         {
             var results = new List<Clinker>();
@@ -183,5 +229,6 @@ namespace ClinkedIn_SportySpice.Repositories
             }
             return true;
         }
+        */
     }
 }
