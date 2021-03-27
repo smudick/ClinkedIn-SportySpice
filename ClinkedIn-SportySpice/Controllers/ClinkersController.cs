@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClinkedIn_SportySpice.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Clinkers")]
     [ApiController]
     public class ClinkersController : ControllerBase
     {
@@ -33,6 +33,7 @@ namespace ClinkedIn_SportySpice.Controllers
             }
             return Ok(_repo.GetById(id));
         }
+        /*
         [HttpGet("search/service/{service}")]
         public IActionResult GetByServices(string service)
         {
@@ -192,6 +193,6 @@ namespace ClinkedIn_SportySpice.Controllers
             }
             return NotFound("User not found.");
         }
-
+        */
     }
 }
